@@ -7,45 +7,38 @@ import org.udemy.sergey.springcloud.model.UserEntity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class UserService {
     Map<String, User> userMap;
     public UserEntity getUser(String userId){
-        if(!userMap.containsKey(userId)){
-            throw new CustomException("userId doesn't exists: "+ userId);
-        }
-        User user = userMap.get(userId);
-        return new UserEntity(user.getFirstName(), user.getLastName(), user.getEmail(), user.getUserId());
+        return Optional.ofNullable(userMap.get(userId))
+                .map(user -> new UserEntity(user.getFirstName(), user.getLastName(), user.getEmail(), user.getUserId()))
+                .orElseThrow(()->new CustomException("User ID doesn't exist: " + userId));
     }
     public User createUser(UserEntity userEntity){
-        User result = new User();
-        result.setEmail(userEntity.getEmail());
-        result.setFirstName(userEntity.getFirstName());
-        result.setLastName(userEntity.getLastName());
-        var userID = Integer.toString(Math.abs(UUID.randomUUID().hashCode() % 10));
-        if(userMap==null) userMap = new HashMap<>();
-        result.setUserId(userID);
+        userMap = Optional.ofNullable(userMap).orElseGet(HashMap::new);
+        String userID = String.valueOf(Math.abs(UUID.randomUUID().hashCode() % 10));
+        User result = new User().builder().firstName(userEntity.getFirstName())
+                .lastName(userEntity.getLastName()).email(userEntity.getEmail()).userId(userID).build();
         userMap.put(userID, result);
         return result;
     }
 
     public User updateUser(String userId, UserEntity userEntity) {
-        if(!userMap.containsKey(userId)){
-            throw new CustomException("userId doesn't exists: "+ userId);
-        }
-        User user = userMap.get(userId);
-        user.setFirstName(userEntity.getFirstName());
-        user.setLastName(userEntity.getLastName());
-        userMap.put(userId,user);
-        return user;
+        return Optional.ofNullable(userMap.get(userId))
+                .map(user -> {
+                    user.setFirstName(userEntity.getFirstName());
+                    user.setLastName(userEntity.getLastName());
+                    return user;
+                })
+                .orElseThrow(()->new CustomException("User ID doesn't exist: " + userId));
     }
 
     public void deleteUser(String userId) {
-        if(!userMap.containsKey(userId)){
-            throw new CustomException("userId doesn't exists: "+ userId);
-        }
-        userMap.remove(userId);
+        Optional.ofNullable(userMap.remove(userId)).map(user -> userMap.remove(userId))
+                .orElseThrow(() -> new CustomException("User ID doesn't exist: " + userId));
     }
 }
