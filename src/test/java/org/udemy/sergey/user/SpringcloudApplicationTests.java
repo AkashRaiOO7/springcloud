@@ -1,4 +1,4 @@
-package org.udemy.sergey.springcloud;
+package org.udemy.sergey.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

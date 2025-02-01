@@ -1,4 +1,4 @@
-package org.udemy.sergey.springcloud.controller;
+package org.udemy.sergey.user.controller;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,9 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.udemy.sergey.springcloud.model.User;
-import org.udemy.sergey.springcloud.model.UserEntity;
-import org.udemy.sergey.springcloud.service.UserService;
+import org.udemy.sergey.user.model.User;
+import org.udemy.sergey.user.model.UserEntity;
+import org.udemy.sergey.user.service.UserService;
 
 @RestController
 @RequestMapping("/users")

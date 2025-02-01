@@ -1,4 +1,4 @@
-package org.udemy.sergey.springcloud.model;
+package org.udemy.sergey.user.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;

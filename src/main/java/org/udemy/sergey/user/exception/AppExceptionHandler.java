@@ -1,4 +1,4 @@
-package org.udemy.sergey.springcloud.exception;
+package org.udemy.sergey.user.exception;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;

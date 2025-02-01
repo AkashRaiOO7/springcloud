@@ -1,4 +1,4 @@
-package org.udemy.sergey.springcloud.exception;
+package org.udemy.sergey.user.exception;
 
 public class CustomException extends RuntimeException{
     public CustomException(String message) {

@@ -1,9 +1,9 @@
-package org.udemy.sergey.springcloud.service;
+package org.udemy.sergey.user.service;
 
 import org.springframework.stereotype.Service;
-import org.udemy.sergey.springcloud.exception.CustomException;
-import org.udemy.sergey.springcloud.model.User;
-import org.udemy.sergey.springcloud.model.UserEntity;
+import org.udemy.sergey.user.exception.CustomException;
+import org.udemy.sergey.user.model.User;
+import org.udemy.sergey.user.model.UserEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +21,7 @@ public class UserService {
     public User createUser(UserEntity userEntity){
         userMap = Optional.ofNullable(userMap).orElseGet(HashMap::new);
         String userID = String.valueOf(Math.abs(UUID.randomUUID().hashCode() % 10));
-        User result = new User().builder().firstName(userEntity.getFirstName())
+        User result = User.builder().firstName(userEntity.getFirstName())
                 .lastName(userEntity.getLastName()).email(userEntity.getEmail()).userId(userID).build();
         userMap.put(userID, result);
         return result;
